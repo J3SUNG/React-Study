@@ -6,9 +6,10 @@ module.exports = {
    devtool: 'eval',
 
    entry: {
-
+      app: ['./client', 'WordRelay'],
    }, 
    output: {
-        path: path.join(__dirname, 'dist'),
+      path: path.join(__dirname, 'dist'),
+      filename: 'app.js',
    },
 };
