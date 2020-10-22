@@ -1,4 +1,4 @@
-const React = require("react");
+const React = require('react');
 const { Component} = React;
 
 class WordRelay extends Component {
