@@ -7,6 +7,15 @@ module.exports = {
     resolve: {
         extensions: ['.jsx', '.js'],
     },
+    devServer: {
+        host : '127.0.0.1',
+        contentBase: path.join(__dirname, "/"),
+        compress: true,
+        hot : true,
+        inline: true,
+        port: 9000,
+        open : true
+    },
 
     entry: {
         app: './client',
