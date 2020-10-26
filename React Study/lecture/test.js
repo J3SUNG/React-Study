@@ -1,3 +1,0 @@
-didsssssnd(a);
-scr;
-ss;
