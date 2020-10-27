@@ -4,6 +4,11 @@ import { render } from "react-dom";
 class Test extends PureComponent {
   state = {
     counter: 0,
+    string: "hello",
+    number: 1,
+    boolean: true,
+    object: {},
+    array: [],
   };
 
   // shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -14,7 +19,9 @@ class Test extends PureComponent {
   // }
 
   onClick = (prevState) => {
-    this.setState({});
+    this.setState({
+      array: [...this.state.array, 1],
+    });
   };
 
   render() {
