@@ -1,5 +1,5 @@
 const path = require("path");
-const { webpack } = require("webpack");
+var webpack = require("webpack");
 
 module.exports = {
   mode: "development",
@@ -46,7 +46,7 @@ module.exports = {
       },
     ],
   },
-  plugins: [],
+  plugins: [new webpack.HotModuleReplacementPlugin()],
   output: {
     path: path.join(__dirname, "dist"),
     filename: "app.js",
