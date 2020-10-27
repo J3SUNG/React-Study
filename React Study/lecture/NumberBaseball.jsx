@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState, memo } from "react";
 import Try from "./Try";
 
 function getNumbers() {
@@ -8,16 +8,15 @@ function getNumbers() {
     const chosen = candiate.splice(Math.floor(Math.random() * (9 - i)), 1)[0];
     array.push(chosen);
   }
-
   return array;
 }
 
-const NumberBaseball = () => {
+const NumberBaseball = memo(() => {
   const [result, setResult] = useState("");
   const [value, setValue] = useState("");
   const [answer, setAnswer] = useState(getNumbers());
-  console.log(answer);
   const [tries, setTries] = useState([]);
+  const inputRef = useRef(null);
 
   const onSubmitForm = (e) => {
     e.preventDefault();
@@ -53,6 +52,7 @@ const NumberBaseball = () => {
         setValue("");
       }
     }
+    inputRef.current.focus();
   };
 
   const onChangeInput = (e) => {
@@ -63,7 +63,12 @@ const NumberBaseball = () => {
     <>
       <h1>{result}</h1>
       <form onSubmit={onSubmitForm}>
-        <input maxLength={4} value={value} onChange={onChangeInput} />
+        <input
+          ref={inputRef}
+          maxLength={4}
+          value={value}
+          onChange={onChangeInput}
+        />
       </form>
       <div>시도: {tries.length}</div>
       <ul>
@@ -73,6 +78,6 @@ const NumberBaseball = () => {
       </ul>
     </>
   );
-};
+});
 
 export default NumberBaseball;
