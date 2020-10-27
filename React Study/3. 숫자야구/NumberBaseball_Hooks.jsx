@@ -1,5 +1,5 @@
 import React, { useRef, useState, memo } from "react";
-import Try from "./Try";
+import Try from "./try";
 
 function getNumbers() {
   const candiate = [1, 2, 3, 4, 5, 6, 7, 8, 9];
