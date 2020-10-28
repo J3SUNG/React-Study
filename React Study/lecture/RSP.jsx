@@ -54,7 +54,7 @@ class RSP extends Component {
     }
   };
 
-  onClickBtn = (choice) => {
+  onClickBtn = (choice) => () => {
     const { imgCoord } = this.state;
     clearInterval(this.interval);
     const myScore = scores[choice];
@@ -96,25 +96,17 @@ class RSP extends Component {
           }}
         />
         <div>
-          <button
-            id="rock"
-            className="btn"
-            onClick={() => this.onClickBtn("rock")}
-          >
+          <button id="rock" className="btn" onClick={this.onClickBtn("rock")}>
             바위
           </button>
           <button
             id="scissor"
             className="btn"
-            onClick={() => this.onClickBtn("scissors")}
+            onClick={this.onClickBtn("scissors")}
           >
             가위
           </button>
-          <button
-            id="paper"
-            className="btn"
-            onClick={() => this.onClickBtn("paper")}
-          >
+          <button id="paper" className="btn" onClick={this.onClickBtn("paper")}>
             보
           </button>
         </div>
