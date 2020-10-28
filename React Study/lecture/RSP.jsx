@@ -60,7 +60,6 @@ class RSP extends Component {
     const myScore = scores[choice];
     const cpuScore = scores[computerChoice(imgCoord)];
     const diff = myScore - cpuScore;
-    console.log(diff, myScore, cpuScore, scores);
     if (diff === 0) {
       this.setState({
         result: "비겼습니다.",
@@ -82,7 +81,7 @@ class RSP extends Component {
     }
     setTimeout(() => {
       this.interval = setInterval(this.changeHand, 100);
-    }, 2000);
+    }, 1000);
   };
 
   render() {
