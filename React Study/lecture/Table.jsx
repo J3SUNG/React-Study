@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
+import { TableContext } from "./MineSearch";
 import Tr from "./Tr";
 
-const Table = ({ onClick, tableData, dispatch }) => {
+const Table = () => {
+  const { tableData } = useContext(TableContext);
   return (
     <table>
       {Array(tableData.length)
         .fill()
         .map((tr, i) => (
-          <Tr key={i} dispatch={dispatch} rowIndex={i} rowData={tableData[i]} />
+          <Tr rowIndex={i} />
         ))}
     </table>
   );
