@@ -1,4 +1,4 @@
-import React, { useReducer, createContext, useMemo } from "react";
+import React, { useEffect, useReducer, createContext, useMemo } from "react";
 import Table from "./Table";
 import Form from "./Form";
 
@@ -28,8 +28,9 @@ const initialState = {
   },
   timer: 0,
   result: "",
-  halted: false,
+  halted: true,
   openedCount: 0,
+  timer: 0,
 };
 
 const plantMine = (row, cell, mine) => {
@@ -72,6 +73,7 @@ export const CLICK_MINE = "CLICK_MINE";
 export const FLAG_CELL = "FLAG_CELL";
 export const QUESTION_CELL = "QUESTION_CELL";
 export const NORMALIZE_CELL = "NORMALIZE_CELL";
+export const INCREMENT_TIMER = "INCREMENT_TIMER";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -82,6 +84,7 @@ const reducer = (state, action) => {
         openedCount: 0,
         tableData: plantMine(action.row, action.cell, action.mine),
         halted: false,
+        timer: 0,
       };
     }
     case OPEN_CELL: {
@@ -116,7 +119,6 @@ const reducer = (state, action) => {
         } else {
           checked.push(row + "/" + cell);
         }
-        ++openedCount;
         let around = [tableData[row][cell - 1], tableData[row][cell + 1]];
         if (tableData[row - 1]) {
           around = around.concat(
@@ -136,7 +138,6 @@ const reducer = (state, action) => {
         const count = around.filter((v) =>
           [CODE.MINE, CODE.FLAG_MINE, CODE.QUESTION_MINE].includes(v)
         ).length;
-        tableData[row][cell] = count;
         if (count === 0) {
           const near = [];
           if (row - 1 > -1) {
@@ -156,8 +157,11 @@ const reducer = (state, action) => {
               checkAround(n[0], n[1]);
             }
           });
-        } else {
         }
+        if (tableData[row][cell] === CODE.NORMAL) {
+          ++openedCount;
+        }
+        tableData[row][cell] = count;
       };
       checkAround(action.row, action.cell);
       let halted = false;
@@ -167,7 +171,7 @@ const reducer = (state, action) => {
         state.openedCount + openedCount
       ) {
         halted = true;
-        result = "winner";
+        result = `${state.timer}sec, winner`;
       }
       return {
         ...state,
@@ -226,6 +230,12 @@ const reducer = (state, action) => {
         tableData,
       };
     }
+    case INCREMENT_TIMER: {
+      return {
+        ...state,
+        timer: state.timer + 1,
+      };
+    }
     default:
       return state;
   }
@@ -239,6 +249,17 @@ const MineSearch = () => {
     () => ({ tableData: tableData, halted: halted, dispatch }),
     [tableData, halted]
   );
+
+  useEffect(() => {
+    if (halted === false) {
+      const timer = setInterval(() => {
+        dispatch({ type: INCREMENT_TIMER });
+      }, 1000);
+    }
+    return () => {
+      clearInterval();
+    };
+  }, [halted]);
 
   return (
     <TableContext.Provider value={value}>
