@@ -8,10 +8,13 @@
       crossorigin
       src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
     ></script>
+    <!-- babel은 javascript안에서 html태그를 쓰는 문법을 사용하기 위해 가져옴  -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
   </head>
   <body>
     <div id="root"></div>
-    <script>
+    <!-- babel을 script에서 사용  -->
+    <script type="text/babel">
       class LikeButton extends React.Component {
         constructor(props) {
           super(props);
@@ -29,13 +32,14 @@
                 this.setState({ liked: true });
               }}
             >
-              Liked
+              {this.state.liked === true ? "Liked" : "Like"}
             </button>
           );
         }
+        // JSX ( JS + XML )
       }
     </script>
-    <script>
+    <script type="text/babel">
       ReactDOM.render(<LikeButton />, document.querySelector("#root"));
     </script>
   </body>
