@@ -1,11 +1,21 @@
 const path = require("path");
-const { webpack } = require("webpack");
+const RefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
 module.exports = {
   mode: "development",
   devtool: "eval",
   resolve: {
     extensions: [".jsx", ".js"],
+  },
+
+  devServer: {
+    publicPath: "/dist/",
+    host: "127.0.0.1",
+    contentBase: path.join(__dirname, "/"),
+    compress: true,
+    hot: true,
+    port: 9000,
+    open: true,
   },
 
   entry: {
@@ -29,14 +39,18 @@ module.exports = {
             ],
             "@babel/preset-react",
           ],
-          plugins: [],
+          plugins: [
+            "@babel/plugin-proposal-class-properties",
+            "react-refresh/babel",
+          ],
         },
       },
     ],
   },
-  plugins: [new webpack.LoaderOptionsPlugin({ debug: true })],
+  plugins: [new RefreshWebpackPlugin()],
   output: {
     path: path.join(__dirname, "dist"),
     filename: "app.js",
+    publicPath: "/dist/",
   },
 };

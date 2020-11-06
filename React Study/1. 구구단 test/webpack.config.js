@@ -1,32 +1,56 @@
 const path = require("path");
-const { webpack } = require("webpack");
+const RefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
 module.exports = {
   mode: "development",
   devtool: "eval",
   resolve: {
-    extensions: [".jsx", ".js"], // 파일을 적을때 해당 확장자를 적지 않아도 해당 확장자가 있는지 확인해줌
+    extensions: [".jsx", ".js"],
+  },
+
+  devServer: {
+    publicPath: "/dist/",
+    host: "127.0.0.1",
+    contentBase: path.join(__dirname, "/"),
+    compress: true,
+    hot: true,
+    port: 9000,
+    open: true,
   },
 
   entry: {
-    // 입력 부분, 파일 경로 지정
     app: "./client",
   },
   module: {
     rules: [
       {
-        test: /\.jsx?$/, //js파일과 jsx를 rules 적용
-        loader: "babel-loader", // babel과 연결 (호환 가능한 문법으로 변경)
+        test: /\.jsx?$/,
+        loader: "babel-loader",
         options: {
-          presets: ["@babel/preset-env", "@babel/preset-react"], // babel 옵션 적용
-          plugins: ["@babel/plugin-proposal-class-properties"],
+          presets: [
+            [
+              "@babel/preset-env",
+              {
+                targets: {
+                  browsers: ["> 5% in KR", "last 2 chrome versions"],
+                },
+                debug: true,
+              },
+            ],
+            "@babel/preset-react",
+          ],
+          plugins: [
+            "@babel/plugin-proposal-class-properties",
+            "react-refresh/babel",
+          ],
         },
       },
     ],
   },
+  plugins: [new RefreshWebpackPlugin()],
   output: {
-    // 출력 부분, 경로와 파일이름 지정
     path: path.join(__dirname, "dist"),
     filename: "app.js",
+    publicPath: "/dist/",
   },
 };
