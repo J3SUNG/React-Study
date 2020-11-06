@@ -72,7 +72,7 @@ class NumberBaseball extends Component {
         }
       }
     }
-    this.inputRef.current.focus();
+    this.inputRef.focus();
   };
 
   onChangeInput = (e) => {
@@ -83,7 +83,11 @@ class NumberBaseball extends Component {
     });
   };
 
-  inputRef = createRef();
+  inputRef;
+
+  onInputRef = (c) => {
+    this.inputRef = c;
+  };
 
   render() {
     const { result, value, tries } = this.state;
@@ -92,9 +96,7 @@ class NumberBaseball extends Component {
         <h1>{result}</h1>
         <form onSubmit={this.onSubmitForm}>
           <input
-            ref={(c) => {
-              this.inputRef;
-            }}
+            ref={this.onInputRef}
             maxLength={4}
             value={value}
             onChange={this.onChangeInput}
