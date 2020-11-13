@@ -13,7 +13,7 @@ module.exports = {
     host: "127.0.0.1",
     contentBase: path.join(__dirname, "/"),
     compress: true,
-    hot: true,
+    hot: tr ue,
     port: 9000,
     open: true,
   },
