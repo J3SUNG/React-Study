@@ -5,6 +5,7 @@ import Lotto from "../6. 로또추첨기/Lotto";
 
 class GameMatcher extends Component {
   render() {
+    console.log(this.props);
     let urlSearchParams = new URLSearchParams(
       this.props.location.search.slice(1)
     );
