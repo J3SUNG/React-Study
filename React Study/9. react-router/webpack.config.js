@@ -1,21 +1,11 @@
 const path = require("path");
-var webpack = require("webpack");
-// process.env.NODE_ENV = 'production'
+const RefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
 module.exports = {
   mode: "development",
   devtool: "eval",
   resolve: {
     extensions: [".jsx", ".js"],
-  },
-  devServer: {
-    host: "127.0.0.1",
-    contentBase: path.join(__dirname, "/"),
-    compress: true,
-    hot: true,
-    inline: true,
-    port: 9000,
-    open: true,
   },
 
   entry: {
@@ -41,16 +31,26 @@ module.exports = {
           ],
           plugins: [
             "@babel/plugin-proposal-class-properties",
-            "react-hot-loader/babel",
+            "react-refresh/babel",
           ],
         },
       },
     ],
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  plugins: [new RefreshWebpackPlugin()],
   output: {
     path: path.join(__dirname, "dist"),
     filename: "app.js",
     publicPath: "/dist/",
+  },
+  devServer: {
+    historyApiFallback: true,
+    publicPath: "/dist/",
+    host: "127.0.0.1",
+    contentBase: path.join(__dirname, "/"),
+    compress: true,
+    hot: true,
+    port: 9000,
+    open: true,
   },
 };
